@@ -61,6 +61,18 @@ String meshBridgeTarget();                        // pinned address ("" = auto)
 void   meshBridgeSetTarget(const String& address); // choose node by BLE address
 void   meshBridgeClearSelection();                 // forget target + PIN -> discovery mode
 void   meshBridgeRequestScan();                    // kick a scan on the next tick
+bool   meshBridgeLocked();                         // bound to a node (connected/connecting/need_pin)
+bool   meshBridgePeerInfo(MeshNodeInfo& out);      // info for the connected / last-used node
+void   meshBridgeDisconnect();                     // drop link, keep saved target, stop auto-reconnect
+void   meshBridgeReconnect();                      // resume connecting to the saved target
+
+// --- settings (Meshtastic admin) -------------------------------------------
+bool   meshBridgeSettingsReady();
+void   meshBridgeRequestSettings();
+String meshBridgeConfigJson();                     // config/module/channel/owner snapshot
+bool   meshBridgeApplySetting(uint8_t scope, uint8_t type, uint8_t field,
+                              const String& value, String& err);
+void   meshBridgeRequestOwner();
 
 // --- actions ---------------------------------------------------------------
 bool meshBridgeSendChannel(uint8_t ch, const String& text, String& err);
